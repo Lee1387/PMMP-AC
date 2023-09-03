@@ -25,6 +25,10 @@ class AntiCheat extends PluginBase implements \pocketmine\event\Listener {
         $this->saveDefaultConfig();
         $this->getResource("config.yml");
 
+        if ($this->getConfig()->get("config-version") == null || $this->getConfig()->get("config-version") != Constants::CONFIG_VERSION) {
+            $this->getLogger()->warning(Constants::PREFIX . "Config Outdated! Proceed at your own risk.");
+        }
+
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
 
         $this->userManager = new UserManager();

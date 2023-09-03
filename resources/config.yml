@@ -1,3 +1,21 @@
+# Debug 
 enable-debug: false
+config-version: "0.0.1"
+
+# Reach 
+
 Reach-notify: true
+Maximum-Reach: 3.5
+Reach-MaxViolations: 3
+
+# Hitbox 
+
 Hitbox-notify: true
+Hitbox-MaxViolations: 3
+
+# Timer 
+
+Timer-notify: true
+Timer-MaxViolations: 3
+Timer-Punishment: "Kick"
+Timer-TickDifference: 15

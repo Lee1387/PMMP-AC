@@ -4,6 +4,7 @@ namespace Lee1387\Checks;
 
 use Lee1387\Checks\Combat\Hitbox;
 use Lee1387\Checks\Combat\Reach;
+use Lee1387\Checks\Movement\Timer;
 
 class CheckManager {
 
@@ -15,6 +16,7 @@ class CheckManager {
     public function __construct() {
         $this->Checks[] = new Reach();
         $this->Checks[] = new Hitbox();
+        $this->Checks[] = new Timer();
     }
 
     /**

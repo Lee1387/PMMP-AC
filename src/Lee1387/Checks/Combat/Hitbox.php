@@ -15,7 +15,7 @@ use Lee1387\Utils\Raycast;
 class Hitbox extends Check {
 
     public function __construct() {
-        parent::__construct("Hitbox", 5);
+        parent::__construct("Hitbox");
     }
 
     public function onAttack(EntityDamageByEntityEvent $event, User $user): void {
@@ -35,7 +35,6 @@ class Hitbox extends Check {
             }
 
             $rewindBuffer = $victimUser->rewindMovementBuffer($rewindTicks);
-
             $ray = Raycast::EntityOnLine($rewindBuffer->getBoundingBox(), $player->getPosition(), $player->getDirectionVector(), $player->getPosition()->distance($victim->getPosition()));
 
             if (!$ray) {

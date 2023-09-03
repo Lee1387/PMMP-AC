@@ -27,7 +27,6 @@ class UserManager {
         }
 
         $this->Users[$uuid] = $user;
-        AntiCheat::getInstance()->getLogger()->info("Registered User");
     }
 
     /**
@@ -36,7 +35,6 @@ class UserManager {
      */
     public function unregisterUser(string $uuid): void {
         if (isset($this->Users[$uuid])) {
-            AntiCheat::getInstance()->getLogger()->info("Removed User");
             unset($this->Users[$uuid]);
         }
     }

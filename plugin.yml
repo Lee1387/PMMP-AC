@@ -14,3 +14,6 @@ permissions:
   anticheat.perms:
     description: OP Perms for AntiCheat
     default: op
+  anticheat.notify:
+    description: Nofify everyone if a Player fails a Check
+    default: true # Testing only
