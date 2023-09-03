@@ -5,12 +5,12 @@ main: Lee1387\AntiCheat
 author: Lee1387
 
 commands:
-  test:
-    description: testing purposes
-    permission: test.perms
-    usage: /<test>
+  anticheat:
+    description: AntiCheat Commands
+    permission: anticheat.perms
+    usage: /anticheat help
 
 permissions:
-  test.perms:
-    description: Test
+  anticheat.perms:
+    description: OP Perms for AntiCheat
     default: op

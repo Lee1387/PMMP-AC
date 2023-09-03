@@ -23,5 +23,14 @@ class CheckManager {
     public function getChecks(): array {
         return $this->Checks;
     }
+
+    public function getCheckByName(string $name): ?Check {
+        foreach ($this->getChecks() as $check) {
+            if ($check->getName() == $name) {
+                return $check;
+            }
+        }
+        return null;
+    }
     
 }

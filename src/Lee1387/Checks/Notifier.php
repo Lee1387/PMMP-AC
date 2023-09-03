@@ -3,6 +3,7 @@
 namespace Lee1387\Checks;
 
 use Lee1387\AntiCheat;
+use Lee1387\Utils\Constants;
 
 class Notifier {
 
@@ -12,14 +13,14 @@ class Notifier {
      * @param int $Violation
      * @return void
      */
-    public static function NotifyFlag(string $name, string $Check, int $Violation): void {
+    public static function NotifyFlag(string $name, string $Check, int $Violation, bool $notify): void {
 
-        if (!AntiCheat::getInstance()->getConfig()->get("enable-debug")) {
+        if (!AntiCheat::getInstance()->getConfig()->get("enable-debug") || !$notify) {
             return;
         }
         
         foreach (AntiCheat::getInstance()->getServer()->getOnlinePlayers() as $player) {
-            $player->sendMessage("§6[AntiCheat] §a" . $name . "§f failed §a" . $Check . " §a[§4" . $Violation . "§a]");
+            $player->sendMessage(Constants::PREFIX . $name . "§f failed §a" . $Check . " §a[§4" . $Violation . "§a]");
         }
     }
 }
