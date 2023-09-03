@@ -13,6 +13,11 @@ class Notifier {
      * @return void
      */
     public static function NotifyFlag(string $name, string $Check, int $Violation): void {
+
+        if (!AntiCheat::getInstance()->getConfig()->get("enable-debug")) {
+            return;
+        }
+        
         foreach (AntiCheat::getInstance()->getServer()->getOnlinePlayers() as $player) {
             $player->sendMessage("§6[AntiCheat] §a" . $name . "§f failed §a" . $Check . " §a[§4" . $Violation . "§a]");
         }
