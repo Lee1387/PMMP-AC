@@ -16,4 +16,4 @@ permissions:
     default: op
   anticheat.notify:
     description: Nofify everyone if a Player fails a Check
-    default: true # Testing only
+    default: op
