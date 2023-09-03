@@ -4,6 +4,7 @@ namespace Lee1387\Checks\Combat;
 
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\math\Vector3;
+use pocketmine\network\mcpe\protocol\types\InputMode;
 use pocketmine\player\Player;
 use Lee1387\Checks\Check;
 use Lee1387\Checks\Notifier;
@@ -23,6 +24,10 @@ class Hitbox extends Check {
         $victim = $event->getEntity();
 
         if ($player instanceof Player && $victim instanceof Player) {
+
+            if ($user->getInput() == 0 || $user->getInput() == InputMode::TOUCHSCREEN) {
+                return;
+            }
 
             $victimUUID = $victim->getUniqueId()->toString();
             $victimUser = AntiCheat::getInstance()->getUserManager()->getUser($victimUUID);

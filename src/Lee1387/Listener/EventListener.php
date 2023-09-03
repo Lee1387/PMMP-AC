@@ -50,6 +50,10 @@ class EventListener implements Listener {
                 $user->setTickDelay($this->getServerTick() - $packet->getTick());
             }
 
+            if ($user->getInput() == 0) {
+                $user->setInput($packet->getInputMode());
+            }
+
             foreach (AntiCheat::getInstance()->getCheckManager()->getChecks() as $Check) {
                 $Check->onMove($player, $packet, $user);
             }
