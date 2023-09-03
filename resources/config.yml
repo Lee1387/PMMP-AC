@@ -4,11 +4,13 @@ config-version: "0.0.2"
 prefix: "§6[AntiCheat]"
 alert-message-debug: "%PREFIX% §c%PLAYER%§f failed §a%CHECK%§a [§4%VIOLATION%§a]"
 alert-message: "%PREFIX% §c%PLAYER%§f is using §a%CHECK%"
+kick-message: "%PREFIX% §fYou have been kicked for Cheating!"
+ban-message: "%PREFIX% §fYou have been banned for Cheating!"
 
 # Reach 
 
 Reach-notify: true
-Maximum-Reach: 3.5
+Maximum-Reach: 3.6
 Reach-MaxViolations: 3
 
 # Hitbox 
