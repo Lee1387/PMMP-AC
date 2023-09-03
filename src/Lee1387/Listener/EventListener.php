@@ -8,9 +8,12 @@ use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\math\Vector2;
+use pocketmine\network\mcpe\protocol\InventoryTransactionPacket;
 use pocketmine\network\mcpe\protocol\LoginPacket;
 use pocketmine\network\mcpe\protocol\PlayerAuthInputPacket;
+use pocketmine\network\mcpe\protocol\types\inventory\UseItemOnEntityTransactionData;
 use pocketmine\player\Player;
+use Lee1387\Buffers\AttackFrame;
 use Lee1387\Buffers\MovementFrame;
 use Lee1387\Checks\Check;
 use Lee1387\AntiCheat;
@@ -32,6 +35,19 @@ class EventListener implements Listener {
 
         $uuid = $player->getUniqueId()->toString();
         $user = AntiCheat::getInstance()->getUserManager()->getUser($uuid);
+
+        if ($packet instanceof InventoryTransactionPacket) {
+            $data = $packet->trData;
+
+            if ($data instanceof UseItemOnEntityTransactionData) {
+                $NewBuffer = new AttackFrame(
+                    $this->getServerTick(),
+                    $player->getNetworkSession()->getPing(),
+                    $user->getLastAttack()
+                );
+                AntiCheat::getInstance()->getUserManager()->getUser($uuid)->addToAttackBuffer($NewBuffer);
+            }
+        }
 
         if ($packet instanceof PlayerAuthInputPacket) {
             $NewBuffer = new MovementFrame(

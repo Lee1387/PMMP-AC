@@ -2,6 +2,7 @@
 
 namespace Lee1387\Checks;
 
+use Lee1387\Checks\Combat\AutoClicker;
 use Lee1387\Checks\Combat\Hitbox;
 use Lee1387\Checks\Combat\Reach;
 use Lee1387\Checks\Movement\Timer;
@@ -17,6 +18,7 @@ class CheckManager {
         $this->Checks[] = new Reach();
         $this->Checks[] = new Hitbox();
         $this->Checks[] = new Timer();
+        $this->Checks[] = new AutoClicker();
     }
 
     /**

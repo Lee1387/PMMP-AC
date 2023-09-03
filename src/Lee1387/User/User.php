@@ -3,6 +3,7 @@
 namespace Lee1387\User;
 
 use pocketmine\network\mcpe\protocol\types\InputMode;
+use Lee1387\Buffers\AttackFrame;
 use Lee1387\Buffers\MovementFrame;
 use Lee1387\AntiCheat;
 use Lee1387\Utils\Arrays;
@@ -11,6 +12,7 @@ use Lee1387\Utils\Random;
 class User {
 
     private CONST MOVEMENT_BUFFER_SIZE = 100;
+    private CONST ATTACK_BUFFER_SIZE = 100;
 
     private string $uuid;
 
@@ -19,7 +21,10 @@ class User {
     private int $tickDelay = 0;
     private int $input = 0;
 
+    private float $lastAttack = 0;
+
     private array $movementBuffer = [];
+    private array $attackBuffer = [];
     private array $violations = [];
 
     /**
@@ -53,6 +58,24 @@ class User {
 
     public function getMovementBuffer(): array {
         return $this->movementBuffer;
+    }
+
+    public function addToAttackBuffer(AttackFrame $object): void {
+        $size = count($this->attackBuffer);
+
+        if ($size >= ($this::ATTACK_BUFFER_SIZE)) {
+            $this->attackBuffer = Arrays::removeFirst($this->attackBuffer);
+        }
+        $this->attackBuffer[$size] = $object;
+    }
+
+    public function rewindAttackBuffer(int $ticks = 1): AttackFrame {
+        $size = count($this->attackBuffer) -1;
+        return $this->attackBuffer[$size - $ticks];
+    }
+
+    public function getAttackBuffer(): array {
+        return $this->attackBuffer;
     }
 
     public function increaseViolation(string $Check, $amount): void {
@@ -101,5 +124,13 @@ class User {
 
     public function setInput(int $input): void {
         $this->input = $input;
+    }
+
+    public function getLastAttack(): float {
+        return $this->lastAttack;
+    }
+
+    public function setLastAttack(float $lastAttack): void {
+        $this->lastAttack = $lastAttack;
     }
 }
