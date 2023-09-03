@@ -1,0 +1,16 @@
+name: AntiCheat
+version: 0.0.1
+api: 5.0.0
+main: Lee1387\AntiCheat
+author: Lee1387
+
+commands:
+  test:
+    description: testing purposes
+    permission: test.perms
+    usage: /<test>
+
+permissions:
+  test.perms:
+    description: Test
+    default: op
