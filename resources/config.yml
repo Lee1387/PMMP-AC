@@ -1,6 +1,6 @@
 # Debug 
 enable-debug: false
-config-version: "0.0.3"
+config-version: "0.0.4"
 prefix: "§6[AntiCheat]"
 alert-message-debug: "%PREFIX% §c%PLAYER%§f failed §a%CHECK%§a [§4%VIOLATION%§a]"
 alert-message: "%PREFIX% §c%PLAYER%§f is using §a%CHECK%"
@@ -35,9 +35,16 @@ AutoClicker-MaxViolations: 3
 AutoClicker-AlertFrequency: 25
 CPS-Limit: 15
 
-#BadPacketsA
+# BadPacketsA
 
 BadPacketsA-notify: true
 BadPacketsA-MaxViolations: 5
 BadPacketsA-AlertFrequency: 10
 BadPacketsA-Punishment: "Kick"
+
+# GhostHand
+
+GhostHand-notify: true
+GhostHand-MaxViolations: 5
+GhostHand-AlertFrequency: 10
+GhostHand-Punishment: "Cancel"
