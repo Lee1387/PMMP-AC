@@ -16,6 +16,8 @@ class User {
 
     private string $uuid;
 
+    private bool $notifications = true;
+
     private int $firstServerTick = 0;
     private int $firstClientTick = 0;
     private int $tickDelay = 0;
@@ -26,15 +28,21 @@ class User {
     private array $movementBuffer = [];
     private array $attackBuffer = [];
     private array $violations = [];
+    private array $alerts = [];
 
     /**
      * @param string $uuid
      */
     public function __construct(string $uuid) {
         $this->uuid = $uuid;
+        $config = AntiCheat::getInstance()->getConfig();
 
         foreach (AntiCheat::getInstance()->getCheckManager()->getChecks() as $Check) {
+
+            $frequency = $config->get($Check->getName() . "-AlertFrequency");
+
             $this->violations[$Check->getName()] = 0;
+            $this->alerts[$Check->getName()] = $frequency;
         }
     }
 
@@ -78,11 +86,11 @@ class User {
         return $this->attackBuffer;
     }
 
-    public function increaseViolation(string $Check, $amount): void {
+    public function increaseViolation(string $Check, $amount = 1): void {
         $this->violations[$Check] = Random::clamp(0, PHP_INT_MAX, $this->violations[$Check] + $amount);
     }
 
-    public function decreaseViolation(string $Check, $amount): void {
+    public function decreaseViolation(string $Check, $amount = 1): void {
         $this->violations[$Check] = Random::clamp(0, PHP_INT_MAX, $this->violations[$Check] - $amount);
     }
 
@@ -92,6 +100,22 @@ class User {
 
     public function getViolation(string $Check): int {
         return $this->violations[$Check];
+    }
+
+    public function increaseAlertCount(string $Check, $amount = 1): void {
+        $this->alerts[$Check] = Random::clamp(0, PHP_INT_MAX, $this->alerts[$Check] + $amount);
+    }
+
+    public function decreaseAlertCount(string $Check, $amount = 1): void {
+        $this->alerts[$Check] = Random::clamp(0, PHP_INT_MAX, $this->alerts[$Check] - $amount);
+    }
+
+    public function resetAlertCount(string $Check): void {
+        $this->alerts[$Check] = 0;
+    }
+
+    public function getAlertCount(string $Check): int {
+        return $this->alerts[$Check];
     }
 
     public function getFirstServerTick(): int {
@@ -132,5 +156,13 @@ class User {
 
     public function setLastAttack(float $lastAttack): void {
         $this->lastAttack = $lastAttack;
+    }
+
+    public function hasNotifications(): bool {
+        return $this->notifications;
+    }
+
+    public function setNotifications(bool $notifications): void {
+        $this->notifications = $notifications;
     }
 }

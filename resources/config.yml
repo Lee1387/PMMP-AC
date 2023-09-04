@@ -1,6 +1,6 @@
 # Debug 
 enable-debug: false
-config-version: "0.0.2"
+config-version: "0.0.3"
 prefix: "§6[AntiCheat]"
 alert-message-debug: "%PREFIX% §c%PLAYER%§f failed §a%CHECK%§a [§4%VIOLATION%§a]"
 alert-message: "%PREFIX% §c%PLAYER%§f is using §a%CHECK%"
@@ -12,21 +12,25 @@ ban-message: "%PREFIX% §fYou have been banned for Cheating!"
 Reach-notify: true
 Maximum-Reach: 3.6
 Reach-MaxViolations: 3
+Reach-AlertFrequency: 8
 
 # Hitbox 
 
 Hitbox-notify: true
 Hitbox-MaxViolations: 3
+Hitbox-AlertFrequency: 8
 
 # Timer 
 
 Timer-notify: true
 Timer-MaxViolations: 3
+Timer-AlertFrequency: 5
 Timer-Punishment: "Kick"
 Timer-TickDifference: 15
 
 # AutoClicker
 
 AutoClicker-notify: true
-CPS-Limit: 15
 AutoClicker-MaxViolations: 3
+AutoClicker-AlertFrequency: 10
+CPS-Limit: 15
