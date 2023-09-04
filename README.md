@@ -6,6 +6,7 @@
 - [X] Hitbox
 - [X] Timer
 - [X] AutoClicker/CPS
+- [X] BadPackets
 
 ### TODO
 
