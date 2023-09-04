@@ -6,7 +6,8 @@ use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector2;
 use pocketmine\math\Vector3;
 
-class AttackFrame {
+class AttackFrame
+{
 
     /*** @var int */
     private int $ServerTick;
@@ -20,7 +21,8 @@ class AttackFrame {
      * @param int $Ping
      * @param float $LastAttack
      */
-    public function __construct(int $ServerTick, int $Ping, float $LastAttack) {
+    public function __construct(int $ServerTick, int $Ping, float $LastAttack)
+    {
         $this->ServerTick = $ServerTick;
         $this->Ping = $Ping;
         $this->LastAttack = $LastAttack;
@@ -29,21 +31,26 @@ class AttackFrame {
     /**
      * @return int
      */
-    public function getServerTick(): int {
+    public function getServerTick(): int
+    {
         return $this->ServerTick;
     }
 
     /**
      * @return int
      */
-    public function getPing(): int {
+    public function getPing(): int
+    {
         return $this->Ping;
     }
 
     /**
      * @return float
      */
-    public function getLastAttack(): float {
+    public function getLastAttack(): float
+    {
         return $this->LastAttack;
     }
+
+
 }

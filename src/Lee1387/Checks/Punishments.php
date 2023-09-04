@@ -9,7 +9,8 @@ use Lee1387\AntiCheat;
 use Lee1387\User\User;
 use Lee1387\Utils\Constants;
 
-class Punishments {
+class Punishments
+{
 
     /**
      * @param Player $player
@@ -17,14 +18,15 @@ class Punishments {
      * @param string|null $punishment
      * @return void
      */
-    public static function punishPlayer(Player $player, Check $check, User $user, ?Vector3 $position, ?string $punishment): void {
-        if ($punishment == null) {
+    public static function punishPlayer(Player $player, Check $check, User $user, ?Vector3 $position, ?string $punishment): void
+    {
+        if ($punishment == null){
             return;
-        } 
+        }
 
-        switch ($punishment) {
+        switch ($punishment){
             case "Cancel":
-                if ($position != null) {
+                if ($position != null){
                     $player->teleport($position);
                     $user->resetViolation($check->getName());
                 }
@@ -38,7 +40,8 @@ class Punishments {
         }
     }
 
-    public static function KickUser(Player $player): void {
+    public static function KickUser(Player $player): void
+    {
         $config = AntiCheat::getInstance()->getConfig();
         $message = $config->get("kick-message");
         $prefix = $config->get("prefix");
@@ -49,7 +52,8 @@ class Punishments {
         $player->kick($message);
     }
 
-    public static function BanUser(Player $player): void {
+    public static function BanUser(Player $player): void
+    {
 
         $config = AntiCheat::getInstance()->getConfig();
         $message = $config->get("ban-message");
@@ -63,4 +67,5 @@ class Punishments {
         AntiCheat::getInstance()->getServer()->getNameBans()->add($Ban);
         $player->kick($message);
     }
+
 }

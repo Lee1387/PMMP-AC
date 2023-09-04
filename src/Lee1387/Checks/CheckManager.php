@@ -8,14 +8,16 @@ use Lee1387\Checks\Combat\Reach;
 use Lee1387\Checks\Movement\Timer;
 use Lee1387\Checks\Packets\BadPacketsA;
 
-class CheckManager {
+class CheckManager
+{
 
     /**
      * @var Check[]
      */
     public array $Checks = [];
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->Checks[] = new Reach();
         $this->Checks[] = new Hitbox();
         $this->Checks[] = new Timer();
@@ -26,17 +28,19 @@ class CheckManager {
     /**
      * @return Check[]
      */
-    public function getChecks(): array {
+    public function getChecks() : array
+    {
         return $this->Checks;
     }
 
-    public function getCheckByName(string $name): ?Check {
-        foreach ($this->getChecks() as $check) {
-            if ($check->getName() == $name) {
+    public function getCheckByName(string $name) : ?Check
+    {
+        foreach ($this->getChecks() as $check){
+            if ($check->getName() == $name){
                 return $check;
             }
         }
         return null;
     }
-    
+
 }

@@ -10,18 +10,21 @@ use Lee1387\Checks\Punishments;
 use Lee1387\AntiCheat;
 use Lee1387\User\User;
 
-class BadPacketsA extends Check {
+class BadPacketsA extends Check
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct("BadPacketsA");
     }
 
-    public function onMove(Player $player, PlayerAuthInputPacket $packet, User $user): void {
-        foreach ($user->getMovementBuffer() as $moveFrame) {
-            if ($moveFrame->getPlayerTick() == $packet->getTick()) {
-                if ($user->getViolation($this->getName()) < $this->getMaxViolations()) {
+    public function onMove(Player $player, PlayerAuthInputPacket $packet, User $user): void
+    {
+        foreach ($user->getMovementBuffer() as $moveFrame){
+            if ($moveFrame->getPlayerTick() == $packet->getTick()){
+                if ($user->getViolation($this->getName()) < $this->getMaxViolations()){
                     $user->increaseViolation($this->getName());
-                } else {
+                }else{
                     Notifier::NotifyFlag($player->getName(), $user, $this, $user->getViolation($this->getName()), $this->hasNotify());
                     Punishments::punishPlayer($player, $this, $user, $player->getPosition(), AntiCheat::getInstance()->getConfig()->get($this->getName() . "-Punishment"));
                 }

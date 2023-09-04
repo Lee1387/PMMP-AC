@@ -4,14 +4,16 @@ namespace Lee1387\User;
 
 use Lee1387\AntiCheat;
 
-class UserManager {
+class UserManager
+{
 
     private array $Users = [];
 
-    /**
-     * @return array
-     */
-    public function getUsers(): array {
+     /**
+    * @return array
+    */
+    public function getUsers(): array
+    {
         return $this->Users;
     }
 
@@ -19,10 +21,11 @@ class UserManager {
      * @param User $user
      * @return void
      */
-    public function registerUser(User $user): void {
+    public function registerUser(User $user) : void
+    {
         $uuid = $user->getUUID();
 
-        if (isset($this->Users[$uuid])) {
+        if (isset($this->Users[$uuid])){
             return;
         }
 
@@ -33,8 +36,9 @@ class UserManager {
      * @param string $uuid
      * @return void
      */
-    public function unregisterUser(string $uuid): void {
-        if (isset($this->Users[$uuid])) {
+    public function unregisterUser(string $uuid) : void
+    {
+        if (isset($this->Users[$uuid])){
             unset($this->Users[$uuid]);
         }
     }
@@ -43,10 +47,12 @@ class UserManager {
      * @param string $uuid
      * @return User|null
      */
-    public function getUser(string $uuid): ?User {
-        if (isset($this->Users[$uuid])) {
+    public function getUser(string $uuid) : ?User
+    {
+        if (isset($this->Users[$uuid])){
             return $this->Users[$uuid];
         }
         return null;
     }
+
 }

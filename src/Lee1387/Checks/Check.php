@@ -10,7 +10,8 @@ use pocketmine\player\Player;
 use Lee1387\AntiCheat;
 use Lee1387\User\User;
 
-class Check {
+class Check
+{
 
     /*** @var string */
     private string $name;
@@ -21,9 +22,9 @@ class Check {
 
     /**
      * @param string $name
-     * @param int $maxViolations
      */
-    public function __construct(string $name) {
+    public function __construct(string $name)
+    {
         $this->name = $name;
 
         $config = AntiCheat::getInstance()->getConfig();
@@ -38,28 +39,33 @@ class Check {
     /**
      * @return int
      */
-    public function getMaxViolations(): int {
+    public function getMaxViolations(): int
+    {
         return $this->maxViolations;
     }
 
     /**
      * @return string
      */
-    public function getName(): string {
+    public function getName(): string
+    {
         return $this->name;
     }
 
     /**
      * @param bool $notify
      */
-    public function setNotify(bool $notify): void {
+    public function setNotify(bool $notify): void
+    {
         $this->notify = $notify;
     }
 
     /**
      * @return bool
      */
-    public function hasNotify(): bool {
+    public function hasNotify(): bool
+    {
         return $this->notify;
     }
+
 }

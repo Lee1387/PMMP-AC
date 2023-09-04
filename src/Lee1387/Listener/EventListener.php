@@ -21,27 +21,29 @@ use Lee1387\Checks\Check;
 use Lee1387\AntiCheat;
 use Lee1387\User\User;
 
-class EventListener implements Listener {
+class EventListener implements Listener
+{
 
     /**
      * @param DataPacketReceiveEvent $event
      * @return void
      */
-    public function onPacketReceive(DataPacketReceiveEvent $event): void {
+    public function onPacketReceive(DataPacketReceiveEvent $event) : void
+    {
         $packet = $event->getPacket();
         $player = $event->getOrigin()->getPlayer();
 
-        if ($player == null || AntiCheat::getInstance()->getUserManager()->getUser($player->getUniqueId()->toString()) == null) {
+        if ($player == null || AntiCheat::getInstance()->getUserManager()->getUser($player->getUniqueId()->toString()) == null){
             return;
         }
 
         $uuid = $player->getUniqueId()->toString();
         $user = AntiCheat::getInstance()->getUserManager()->getUser($uuid);
 
-        if ($packet instanceof InventoryTransactionPacket) {
+        if ($packet instanceof InventoryTransactionPacket){
             $data = $packet->trData;
 
-            if ($data instanceof UseItemOnEntityTransactionData) {
+            if ($data instanceof UseItemOnEntityTransactionData){
                 $NewBuffer = new AttackFrame(
                     $this->getServerTick(),
                     $player->getNetworkSession()->getPing(),
@@ -49,11 +51,12 @@ class EventListener implements Listener {
                 );
                 AntiCheat::getInstance()->getUserManager()->getUser($uuid)->addToAttackBuffer($NewBuffer);
             }
+
         }
 
-        if ($packet instanceof PlayerAuthInputPacket) {
+        if ($packet instanceof PlayerAuthInputPacket){
 
-            foreach (AntiCheat::getInstance()->getCheckManager()->getChecks() as $Check) {
+            foreach (AntiCheat::getInstance()->getCheckManager()->getChecks() as $Check){
                 $Check->onMove($player, $packet, $user);
             }
 
@@ -67,41 +70,47 @@ class EventListener implements Listener {
             );
             AntiCheat::getInstance()->getUserManager()->getUser($uuid)->addToMovementBuffer($NewBuffer);
 
-            if ($user->getFirstClientTick() == 0 && $user->getFirstServerTick() == 0) {
+            if ($user->getFirstClientTick() == 0 && $user->getFirstServerTick() == 0){
                 $user->setFirstServerTick($this->getServerTick());
                 $user->setFirstClientTick($packet->getTick());
                 $user->setTickDelay($this->getServerTick() - $packet->getTick());
             }
 
-            if ($user->getInput() == 0) {
+            if ($user->getInput() == 0){
                 $user->setInput($packet->getInputMode());
             }
+
         }
+
     }
 
-    public function onAttack(EntityDamageByEntityEvent $event): void {
+    public function onAttack(EntityDamageByEntityEvent $event) : void
+    {
         $damager = $event->getDamager();
 
-        if ($damager instanceof Player) {
+        if ($damager instanceof Player){
             $user = AntiCheat::getInstance()->getUserManager()->getUser($damager->getUniqueId()->toString());
-            foreach (AntiCheat::getInstance()->getCheckManager()->getChecks() as $Check) {
+            foreach (AntiCheat::getInstance()->getCheckManager()->getChecks() as $Check){
                 $Check->onAttack($event, $user);
             }
+            $user->setLastAttack(microtime(true) * 1000);
         }
+
     }
 
     /**
      * @param PlayerJoinEvent $event
      * @return void
      */
-    public function onJoin(PlayerJoinEvent $event): void {
+    public function onJoin(PlayerJoinEvent $event) : void
+    {
         $player = $event->getPlayer();
         $uuid = $player->getUniqueId()->toString();
         $user = new User($uuid);
 
         AntiCheat::getInstance()->getUserManager()->registerUser($user);
 
-        foreach (AntiCheat::getInstance()->getCheckManager()->getChecks() as $Check) {
+        foreach (AntiCheat::getInstance()->getCheckManager()->getChecks() as $Check){
             $Check->onJoin($event, $user);
         }
     }
@@ -110,14 +119,17 @@ class EventListener implements Listener {
      * @param PlayerQuitEvent $event
      * @return void
      */
-    public function onQuit(PlayerQuitEvent $event): void {
+    public function onQuit(PlayerQuitEvent $event) : void
+    {
         $player = $event->getPlayer();
         $uuid = $player->getUniqueId()->toString();
 
         AntiCheat::getInstance()->getUserManager()->unregisterUser($uuid);
     }
 
-    public function getServerTick(): int {
+    public function getServerTick() : int
+    {
         return AntiCheat::getInstance()->getServer()->getTick();
     }
+
 }
