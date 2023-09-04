@@ -1,0 +1,18 @@
+{
+    "name": "lee1387/pmmp-ac",
+    "require-dev": {
+        "pocketmine/pocketmine-mp": "^5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lee1387\\PmmpAc\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Lee1387",
+            "email": "127062297+Lee1387@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
