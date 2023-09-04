@@ -41,7 +41,7 @@ class AttackFrame {
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getLastAttack(): float {
         return $this->LastAttack;
