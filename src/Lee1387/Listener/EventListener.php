@@ -4,6 +4,7 @@ namespace Lee1387\Listener;
 
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
+use pocketmine\event\entity\EntityMotionEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
@@ -21,6 +22,7 @@ use Lee1387\Buffers\MovementFrame;
 use Lee1387\Checks\Check;
 use Lee1387\AntiCheat;
 use Lee1387\User\User;
+use Lee1387\Utils\Random;
 
 class EventListener implements Listener
 {
@@ -52,10 +54,15 @@ class EventListener implements Listener
                 );
                 AntiCheat::getInstance()->getUserManager()->getUser($uuid)->addToAttackBuffer($NewBuffer);
             }
-
         }
 
         if ($packet instanceof PlayerAuthInputPacket){
+
+            $moveForward = Random::clamp(-0.98, 0.98, $packet->getMoveVecX());
+            $moveStrafe = Random::clamp(-0.98, 0.98, $packet->getMoveVecZ());
+
+            $user->setMoveForward($moveForward);
+            $user->setMoveStrafe($moveStrafe);
 
             foreach (AntiCheat::getInstance()->getCheckManager()->getChecks() as $Check){
                 $Check->onMove($player, $packet, $user);
@@ -66,10 +73,11 @@ class EventListener implements Listener
                 $packet->getTick(),
                 $packet->getPosition(),
                 new Vector2($packet->getPitch(), $packet->getYaw()),
+                $packet->getHeadYaw(),
                 $event->getOrigin()->getPlayer()->isOnGround(),
                 $event->getOrigin()->getPlayer()->boundingBox
             );
-            AntiCheat::getInstance()->getUserManager()->getUser($uuid)->addToMovementBuffer($NewBuffer);
+            $user->addToMovementBuffer($NewBuffer);
 
             if ($user->getFirstClientTick() == 0 && $user->getFirstServerTick() == 0){
                 $user->setFirstServerTick($this->getServerTick());
@@ -88,15 +96,25 @@ class EventListener implements Listener
     public function onAttack(EntityDamageByEntityEvent $event): void
     {
         $damager = $event->getDamager();
+        $victim = $event->getEntity();
+
+        if ($victim instanceof Player){
+            $victimUser = AntiCheat::getInstance()->getUserManager()->getUser($victim->getUniqueId()->toString());
+            $victimUser->setLastKnockbackTick($this->getServerTick());
+        }
 
         if ($damager instanceof Player){
             $user = AntiCheat::getInstance()->getUserManager()->getUser($damager->getUniqueId()->toString());
             foreach (AntiCheat::getInstance()->getCheckManager()->getChecks() as $Check){
                 $Check->onAttack($event, $user);
             }
-            $user->setLastAttack(microtime(true) * 1000);
-        }
+            $user->setLastAttack($this->getServerTick());
 
+            if ($user->isPunishNext()){
+                $user->setPunishNext(false);
+                $event->cancel();
+            }
+        }
     }
 
     public function onBlockBreak(BlockBreakEvent $event): void 
@@ -106,6 +124,17 @@ class EventListener implements Listener
 
         foreach (AntiCheat::getInstance()->getCheckManager()->getChecks() as $Check){
             $Check->onBlockBreak($event, $user);
+        }
+    }
+
+    public function onMotion(EntityMotionEvent $event){
+        $entity = $event->getEntity();
+
+        if ($entity instanceof Player) {
+            $user = AntiCheat::getInstance()->getUserManager()->getUser($entity->getUniqueId()->toString());
+            foreach (AntiCheat::getInstance()->getCheckManager()->getChecks() as $Check){
+                $Check->onMotion($event, $user);
+            }
         }
     }
 
