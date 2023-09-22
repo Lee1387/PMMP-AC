@@ -10,7 +10,6 @@ use Lee1387\Checks\Notifier;
 use Lee1387\AntiCheat;
 use Lee1387\User\User;
 use Lee1387\Utils\Constants;
-use Lee1387\Utils\Raycast;
 
 class Reach extends Check
 {
@@ -35,6 +34,14 @@ class Reach extends Check
 
             $victimUUID = $victim->getUniqueId()->toString();
             $victimUser = AntiCheat::getInstance()->getUserManager()->getUser($victimUUID);
+
+            $rawPlayerVec = new Vector3($player->getPosition()->getX(), 0, $player->getPosition()->getZ());
+            $rawVictimVec = new Vector3($victim->getPosition()->getX(), 0, $victim->getPosition()->getZ());
+            $rawDistance = $rawPlayerVec->distance($rawVictimVec);
+
+            if ($rawDistance <= $this->MAX_REACH){
+                return;
+            }
 
             $ping = $player->getNetworkSession()->getPing();
             $rewindTicks = ceil($ping / 50) + 2;

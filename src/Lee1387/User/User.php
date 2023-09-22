@@ -253,5 +253,4 @@ class User
         $this->punishNext = $punishNext;
     }
 
-
 }
