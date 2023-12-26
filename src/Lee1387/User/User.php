@@ -3,7 +3,6 @@
 namespace Lee1387\User;
 
 use pocketmine\math\Vector3;
-use pocketmine\network\mcpe\protocol\types\InputMode;
 use Lee1387\Buffers\AttackFrame;
 use Lee1387\Buffers\MovementFrame;
 use Lee1387\AntiCheat;

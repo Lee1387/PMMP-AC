@@ -3,14 +3,12 @@
 namespace Lee1387\Checks\Combat;
 
 use pocketmine\event\entity\EntityDamageByEntityEvent;
-use pocketmine\math\Vector3;
 use pocketmine\player\Player;
 use Lee1387\Checks\Check;
 use Lee1387\Checks\Notifier;
 use Lee1387\AntiCheat;
 use Lee1387\User\User;
 use Lee1387\Utils\Constants;
-use Lee1387\Utils\Raycast;
 
 class AutoClicker extends Check
 {

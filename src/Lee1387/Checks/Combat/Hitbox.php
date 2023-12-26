@@ -3,14 +3,12 @@
 namespace Lee1387\Checks\Combat;
 
 use pocketmine\event\entity\EntityDamageByEntityEvent;
-use pocketmine\math\Vector3;
 use pocketmine\network\mcpe\protocol\types\InputMode;
 use pocketmine\player\Player;
 use Lee1387\Checks\Check;
 use Lee1387\Checks\Notifier;
 use Lee1387\AntiCheat;
 use Lee1387\User\User;
-use Lee1387\Utils\Constants;
 use Lee1387\Utils\Raycast;
 
 class Hitbox extends Check
@@ -32,6 +30,11 @@ class Hitbox extends Check
                 return;
             }
 
+            $ray = Raycast::isBBOnline($victim->getBoundingBox(), $player->getPosition(), $player->getDirectionVector(), $player->getPosition()->distance($victim->getPosition()));
+            if ($ray){
+                return;
+            }
+
             $victimUUID = $victim->getUniqueId()->toString();
             $victimUser = AntiCheat::getInstance()->getUserManager()->getUser($victimUUID);
 
@@ -43,9 +46,9 @@ class Hitbox extends Check
             }
 
             $rewindBuffer = $victimUser->rewindMovementBuffer($rewindTicks);
-            $ray = Raycast::EntityOnLine($rewindBuffer->getBoundingBox(), $player->getPosition(), $player->getDirectionVector(), $player->getPosition()->distance($victim->getPosition()));
+            $rewindRay = Raycast::isBBOnline($rewindBuffer->getBoundingBox(), $player->getPosition(), $player->getDirectionVector(), $player->getPosition()->distance($victim->getPosition()));
 
-            if (!$ray){
+            if (!$rewindRay){
                 if ($user->getViolation($this->getName()) < $this->getMaxViolations()){
                     $user->increaseViolation($this->getName(), 2);
                 }

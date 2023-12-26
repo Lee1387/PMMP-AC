@@ -6,7 +6,6 @@ use Lee1387\Checks\Combat\AutoClicker;
 use Lee1387\Checks\Combat\Hitbox;
 use Lee1387\Checks\Combat\ImpossibleRotations;
 use Lee1387\Checks\Combat\Reach;
-use Lee1387\Checks\Movement\PredictionHorizontal;
 use Lee1387\Checks\Movement\Timer;
 use Lee1387\Checks\Packets\BadPacketsA;
 use Lee1387\Checks\World\GhostHand;

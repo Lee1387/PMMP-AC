@@ -7,7 +7,6 @@ use pocketmine\player\Player;
 use Lee1387\Checks\Check;
 use Lee1387\Checks\Notifier;
 use Lee1387\Checks\Punishments;
-use Lee1387\AntiCheat;
 use Lee1387\User\User;
 
 class BadPacketsA extends Check

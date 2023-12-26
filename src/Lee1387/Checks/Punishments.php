@@ -7,7 +7,6 @@ use pocketmine\permission\BanEntry;
 use pocketmine\player\Player;
 use Lee1387\AntiCheat;
 use Lee1387\User\User;
-use Lee1387\Utils\Constants;
 
 class Punishments
 {

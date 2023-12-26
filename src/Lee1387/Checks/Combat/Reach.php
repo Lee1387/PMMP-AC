@@ -10,6 +10,7 @@ use Lee1387\Checks\Notifier;
 use Lee1387\AntiCheat;
 use Lee1387\User\User;
 use Lee1387\Utils\Constants;
+use pocketmine\event\entity\EntityDamageEvent;
 
 class Reach extends Check
 {
@@ -31,6 +32,10 @@ class Reach extends Check
         $victim = $event->getEntity();
 
         if ($player instanceof Player && $victim instanceof Player){
+
+            if ($event->getCause() !== EntityDamageEvent::CAUSE_ENTITY_ATTACK){
+                return;
+            }
 
             $victimUUID = $victim->getUniqueId()->toString();
             $victimUser = AntiCheat::getInstance()->getUserManager()->getUser($victimUUID);

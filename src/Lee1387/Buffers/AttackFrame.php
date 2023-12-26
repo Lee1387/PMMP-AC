@@ -2,10 +2,6 @@
 
 namespace Lee1387\Buffers;
 
-use pocketmine\math\AxisAlignedBB;
-use pocketmine\math\Vector2;
-use pocketmine\math\Vector3;
-
 class AttackFrame
 {
 

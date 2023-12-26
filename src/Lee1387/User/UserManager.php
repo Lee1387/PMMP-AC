@@ -2,8 +2,6 @@
 
 namespace Lee1387\User;
 
-use Lee1387\AntiCheat;
-
 class UserManager
 {
 

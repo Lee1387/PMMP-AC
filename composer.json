@@ -1,7 +1,7 @@
 {
     "name": "lee1387/pmmp-ac",
     "require-dev": {
-        "pocketmine/pocketmine-mp": "^5.4"
+        "pocketmine/pocketmine-mp": "^5.10"
     },
     "autoload": {
         "psr-4": {

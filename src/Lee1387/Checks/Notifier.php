@@ -4,7 +4,6 @@ namespace Lee1387\Checks;
 
 use Lee1387\AntiCheat;
 use Lee1387\User\User;
-use Lee1387\Utils\Constants;
 
 class Notifier
 {
