@@ -10,6 +10,7 @@ use Lee1387\Checks\Notifier;
 use Lee1387\AntiCheat;
 use Lee1387\User\User;
 use Lee1387\Utils\Raycast;
+use pocketmine\event\entity\EntityDamageEvent;
 
 class Hitbox extends Check
 {
@@ -26,7 +27,7 @@ class Hitbox extends Check
 
         if ($player instanceof Player && $victim instanceof Player){
 
-            if ($user->getInput() == 0 || $user->getInput() == InputMode::TOUCHSCREEN){
+            if ($user->getInput() == 0 || $user->getInput() == InputMode::TOUCHSCREEN || $event->getCause() !== EntityDamageEvent::CAUSE_ENTITY_ATTACK){
                 return;
             }
 

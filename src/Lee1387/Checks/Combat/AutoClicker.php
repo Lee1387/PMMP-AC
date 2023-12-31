@@ -9,6 +9,7 @@ use Lee1387\Checks\Notifier;
 use Lee1387\AntiCheat;
 use Lee1387\User\User;
 use Lee1387\Utils\Constants;
+use pocketmine\event\entity\EntityDamageEvent;
 
 class AutoClicker extends Check
 {
@@ -27,6 +28,10 @@ class AutoClicker extends Check
     public function onAttack(EntityDamageByEntityEvent $event, User $user): void
     {
         $player = $event->getDamager();
+
+        if ($event->getCause() !== EntityDamageEvent::CAUSE_ENTITY_ATTACK){
+            return;
+        }
 
         if ($player instanceof Player){
 
