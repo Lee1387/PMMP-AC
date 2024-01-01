@@ -55,9 +55,14 @@ class UserManager
             }
         }
         
-        $user = new User(AntiCheat::getInstance()->getServer()->getPlayerByRawUUID($uuid), $uuid);
-        $this->registerUser($user);
-        return $user;
+        $player = AntiCheat::getInstance()->getServer()->getPlayerByRawUUID($uuid);
+
+        if ($player != null){
+            $user = new User($player, $uuid);
+            $this->registerUser($user);
+            return $user;
+        }
+        return null;
     }
 
 }
