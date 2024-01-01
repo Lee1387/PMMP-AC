@@ -11,6 +11,7 @@ use pocketmine\item\MushroomStew;
 use pocketmine\network\mcpe\protocol\InventoryTransactionPacket;
 use pocketmine\network\mcpe\protocol\types\inventory\UseItemTransactionData;
 use Lee1387\Checks\Check;
+use Lee1387\Checks\CheckManager;
 use Lee1387\Checks\Notifier;
 use Lee1387\User\User;
 
@@ -21,7 +22,7 @@ class FastEat extends Check
 
     public function __construct()
     {
-        parent::__construct("FastEat");
+        parent::__construct("FastEat", CheckManager::WORLD);
     }
 
     public function onUseItem(InventoryTransactionPacket $packet, User $user): void

@@ -5,6 +5,7 @@ namespace Lee1387\Checks\Packets;
 use pocketmine\network\mcpe\protocol\PlayerAuthInputPacket;
 use pocketmine\player\Player;
 use Lee1387\Checks\Check;
+use Lee1387\Checks\CheckManager;
 use Lee1387\Checks\Notifier;
 use Lee1387\Checks\Punishments;
 use Lee1387\User\User;
@@ -14,7 +15,7 @@ class BadPacketsB extends Check
 
     public function __construct()
     {
-        parent::__construct("BadPacketsB");
+        parent::__construct("BadPacketsB", CheckManager::PLAYER);
     }
 
     public function onMove(PlayerAuthInputPacket $packet, User $user): void

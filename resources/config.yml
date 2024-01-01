@@ -1,6 +1,6 @@
 # Debug 
 enable-debug: false
-config-version: "0.0.9"
+config-version: "0.1.9"
 prefix: "§6[AntiCheat]"
 alert-message-debug: "%PREFIX% §c%PLAYER%§f failed §a%CHECK%§a [§4%VIOLATION%§a]"
 alert-message: "%PREFIX% §c%PLAYER%§f is using §a%CHECK%"
@@ -10,6 +10,7 @@ ban-message: "%PREFIX% §fYou have been banned for Cheating!"
 # Reach 
 
 Reach-notify: true
+Reach-enabled: true
 Maximum-Reach: 3.6
 Reach-MaxViolations: 3
 Reach-AlertFrequency: 8
@@ -17,12 +18,14 @@ Reach-AlertFrequency: 8
 # Hitbox 
 
 Hitbox-notify: true
+Hitbox-enabled: true
 Hitbox-MaxViolations: 3
 Hitbox-AlertFrequency: 8
 
 # Timer 
 
 Timer-notify: true
+Timer-enabled: true
 Timer-MaxViolations: 1
 Timer-AlertFrequency: 5
 Timer-Punishment: "Cancel"
@@ -31,6 +34,7 @@ Timer-TickDifference: 3
 # AutoClicker
 
 AutoClicker-notify: true
+AutoClicker-enabled: true
 AutoClicker-MaxViolations: 3
 AutoClicker-AlertFrequency: 25
 CPS-Limit: 15
@@ -38,6 +42,7 @@ CPS-Limit: 15
 # BadPacketsA
 
 BadPacketsA-notify: true
+BadPacketsA-enabled: true
 BadPacketsA-MaxViolations: 5
 BadPacketsA-AlertFrequency: 10
 BadPacketsA-Punishment: "Cancel"
@@ -45,6 +50,7 @@ BadPacketsA-Punishment: "Cancel"
 # BadPacketsB
 
 BadPacketsB-notify: true
+BadPacketsB-enabled: true
 BadPacketsB-MaxViolations: 5
 BadPacketsB-AlertFrequency: 10
 BadPacketsB-Punishment: "Cancel"
@@ -52,12 +58,14 @@ BadPacketsB-Punishment: "Cancel"
 # ImpossibleRotations
 
 ImpossibleRotations-notify: true
+ImpossibleRotations-enabled: true
 ImpossibleRotations-MaxViolations: 8
 ImpossibleRotations-AlertFrequency: 20
 
 # GhostHand
 
 GhostHand-notify: true
+GhostHand-enabled: true
 GhostHand-MaxViolations: 5
 GhostHand-AlertFrequency: 10
 GhostHand-Punishment: "Cancel"
@@ -65,6 +73,7 @@ GhostHand-Punishment: "Cancel"
 # Speed
 
 Speed-notify: true
+Speed-enabled: true
 Speed-MaxViolations: 20
 Speed-AlertFrequency: 8
 Speed-Punishment: "Cancel"
@@ -72,6 +81,7 @@ Speed-Punishment: "Cancel"
 # Fly
 
 Fly-notify: true
+Fly-enabled: true
 Fly-MaxViolations: 30
 Fly-AlertFrequency: 10
 Fly-Punishment: "Kick"
@@ -79,4 +89,14 @@ Fly-Punishment: "Kick"
 # FastEat
 
 FastEat-notify: true
+FastEat-enabled: true
+FastEat-MaxViolations: 30
 FastEat-AlertFrequency: 10
+
+# RotationsA
+
+RotationsA-notify: true 
+RotationsA-enabled: true
+RotationsA-MaxViolations: 8
+RotationsA-AlertFrequency: 20
+Angle-Difference: 45

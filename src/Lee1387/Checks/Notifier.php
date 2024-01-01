@@ -21,7 +21,7 @@ class Notifier
         $config = AntiCheat::getInstance()->getSavedConfig();
         $user->increaseAlertCount($Check->getName());
 
-        if ($user->getAlertCount($Check->getName()) < AntiCheat::getInstance()->getSavedConfig()->get($Check->getName() . "-AlertFrequency")){
+        if ($user->getAlertCount($Check->getName()) < $Check->getAlertFrequency()){
             return;
         }
 

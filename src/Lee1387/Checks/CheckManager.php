@@ -6,6 +6,7 @@ use Lee1387\Checks\Combat\AutoClicker;
 use Lee1387\Checks\Combat\Hitbox;
 use Lee1387\Checks\Combat\ImpossibleRotations;
 use Lee1387\Checks\Combat\Reach;
+use Lee1387\Checks\Combat\RotationsA;
 use Lee1387\Checks\Movement\Fly;
 use Lee1387\Checks\Movement\Speed;
 use Lee1387\Checks\Movement\Timer;
@@ -17,15 +18,20 @@ use Lee1387\Checks\World\GhostHand;
 class CheckManager
 {
 
-    /**
-     * @var Check[]
-     */
+    /*** @var Check[] */
     public array $Checks = [];
+    public array $Punishments = ["Cancel", "Kick", "Ban"];
+
+    public const COMBAT = "Combat";
+    public const MOVEMENT = "Movement";
+    public const PLAYER = "Player";
+    public const WORLD = "World";
 
     public function __construct()
     {
         $this->Checks[] = new Reach();
         $this->Checks[] = new Hitbox();
+        //$this->Checks[] = new RotationsA();
         $this->Checks[] = new Timer();
         $this->Checks[] = new AutoClicker();
         $this->Checks[] = new BadPacketsA();
@@ -45,6 +51,27 @@ class CheckManager
         return $this->Checks;
     }
 
+    /**
+     * @return array
+     */
+    public function getPunishments(): array 
+    {
+        return $this->Punishments;
+    }
+
+    public function getPunishmentID(string $punishment): int 
+    {
+        return match ($punishment) {
+            "Kick" => 1,
+            "Ban" => 2,
+            default => 0,
+        };
+    }
+
+    /**
+     * @param string $name
+     * @return Check|null
+     */
     public function getCheckByName(string $name) : ?Check
     {
         foreach ($this->getChecks() as $check){
@@ -55,4 +82,6 @@ class CheckManager
         return null;
     }
 
+
+    
 }

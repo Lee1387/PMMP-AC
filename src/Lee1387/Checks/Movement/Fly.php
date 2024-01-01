@@ -10,6 +10,7 @@ use pocketmine\network\mcpe\protocol\types\PlayerAuthInputFlags;
 use pocketmine\player\GameMode;
 use pocketmine\player\Player;
 use Lee1387\Checks\Check;
+use Lee1387\Checks\CheckManager;
 use Lee1387\Checks\Notifier;
 use Lee1387\Checks\Punishments;
 use Lee1387\User\User;
@@ -21,7 +22,7 @@ class Fly extends Check
 
     public function __construct()
     {
-        parent::__construct("Fly");
+        parent::__construct("Fly", CheckManager::MOVEMENT);
     }
 
     public function onMove(PlayerAuthInputPacket $packet, User $user): void

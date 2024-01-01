@@ -1,5 +1,5 @@
 name: AntiCheat
-version: 0.0.7
+version: 0.0.8
 api: 5.0.0
 main: Lee1387\AntiCheat
 author: Lee1387
@@ -7,12 +7,12 @@ author: Lee1387
 commands:
   anticheat:
     description: AntiCheat Commands
-    permission: anticheat.perms
+    permission: anticheat.admin
     usage: /anticheat help
 
 permissions:
-  anticheat.perms:
-    description: OP Perms for AntiCheat
+  anticheat.admin:
+    description: Admin Permissions
     default: op
   anticheat.notify:
     description: Nofify everyone if a Player fails a Check

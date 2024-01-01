@@ -10,6 +10,7 @@ use pocketmine\player\Player;
 use Lee1387\Checks\Check;
 use Lee1387\Checks\Notifier;
 use Lee1387\AntiCheat;
+use Lee1387\Checks\CheckManager;
 use Lee1387\User\User;
 use Lee1387\Utils\Constants;
 use Lee1387\Utils\Raycast;
@@ -21,7 +22,7 @@ class Reach extends Check
 
     public function __construct()
     {
-        parent::__construct("Reach");
+        parent::__construct("Reach", CheckManager::COMBAT);
 
         $config = AntiCheat::getInstance()->getSavedConfig();
         $this->MAX_REACH = $config->get("Maximum-Reach") == null ? Constants::ATTACK_REACH : $config->get("Maximum-Reach");

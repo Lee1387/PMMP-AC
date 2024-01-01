@@ -7,6 +7,7 @@ use pocketmine\player\Player;
 use Lee1387\Checks\Check;
 use Lee1387\Checks\Notifier;
 use Lee1387\AntiCheat;
+use Lee1387\Checks\CheckManager;
 use Lee1387\User\User;
 use Lee1387\Utils\Constants;
 use pocketmine\event\entity\EntityDamageEvent;
@@ -18,7 +19,7 @@ class AutoClicker extends Check
 
     public function __construct()
     {
-        parent::__construct("AutoClicker");
+        parent::__construct("AutoClicker", CheckManager::COMBAT);
 
         $config = AntiCheat::getInstance()->getSavedConfig();
         $this->CPS_LIMIT = $config->get("CPS-Limit") == null ? Constants::CPS_LIMIT : $config->get("CPS-Limit");

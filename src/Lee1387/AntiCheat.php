@@ -7,13 +7,10 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
-use pocketmine\plugin\PluginDescription;
-use pocketmine\plugin\PluginLoader;
-use pocketmine\plugin\ResourceProvider;
-use pocketmine\Server;
 use pocketmine\utils\Config;
 use Lee1387\Checks\CheckManager;
 use Lee1387\Listener\EventListener;
+use Lee1387\Panel\AdminPanel;
 use Lee1387\User\UserManager;
 use Lee1387\Utils\Constants;
 
@@ -36,7 +33,8 @@ class AntiCheat extends PluginBase implements \pocketmine\event\Listener
         $this->config = new Config($this->getDataFolder() . "SavedConfig.yml", Config::YAML);
 
         foreach ($default->getAll(true) as $key){
-            if ($this->getSavedConfig()->get($key) == null){
+            if ($this->getSavedConfig()->get($key) === null){
+                $this->getServer()->getLogger()->warning("missing $key");
                 $this->getSavedConfig()->set($key, $default->get($key));
             }
         }
@@ -49,6 +47,11 @@ class AntiCheat extends PluginBase implements \pocketmine\event\Listener
         $this->userManager = new UserManager();
         $this->checkManager = new CheckManager();
 
+    }
+
+    public function onDisable(): void 
+    {
+        $this->getSavedConfig()->save();
     }
 
     /**
@@ -67,53 +70,30 @@ class AntiCheat extends PluginBase implements \pocketmine\event\Listener
 
        if ($command->getName() == "anticheat") {
            if (isset($args[0])) {
-               if ($args[0] == "help"){
-                   $sender->sendMessage(
-                       $prefix . "§f help §8- Lists all Commands\n"
-                       .   $prefix . "§f debug §8- Enable/Disable Debug Mode\n"
-                       .   $prefix . "§f notifications §8- Enable/Disable Notifications for yourself\n"
-                       .   $prefix . "§f notify <Check> §8- Enable/Disable Notifications for certain Checks");
-                       $this->getSavedConfig()->save();
-                       return true;
-                   }
 
-               if ($args[0] == "debug"){
-                   $debug = $this->getSavedConfig()->get("enable-debug");
-                   $this->getSavedConfig()->set("enable-debug", !$debug);
-                   $sender->sendMessage($prefix . " §8Done.");
-                   $this->getSavedConfig()->save();
-                   return true;
-               }
+                switch ($args[0]){
+                    case "help":
+                        $sender->sendMessage(
+                            "$prefix §fhelp §8- Lists all Commands\n
+                        $prefix §fpanel §8- Opens the Admin Panel\n");
 
-               if ($args[0] == "notify"){
-                   if (!isset($args[1])) {
-                       return false;
-                   }
-
-                   $newnotify = $this->getSavedConfig()->get($args[1] . "-notify");
-                   if ($this->getCheckManager()->getCheckByName($args[1]) != null){
-                       $this->getCheckManager()->getCheckByName($args[1])->setNotify(!$newnotify);
-                       $this->getSavedConfig()->set($args[1] . "-notify", !$newnotify);
-                       $sender->sendMessage($prefix . " §8Done.");
-                       $this->getSavedConfig()->save();
-                       return true;
-                   }
-               }
-
-               if ($args[0] == "notifications"){
-                    if ($sender instanceof Player){
-                        $uuid = $sender->getUniqueId()->toString();
-                        $user = $this->getUserManager()->getUser($uuid);
-                        $notifications = $user->hasNotifications();
-                        $user->setNotifications(!$notifications);
-                        $sender->sendMessage($prefix . " §8Done.");
+                        $this->getSavedConfig()->save();
                         return true;
-                    }
-               }
-           }
-       }
-       return false;
-   }
+                    case "panel":
+                        if ($sender instanceof Player) {
+                            if ($sender->hasPermission("anticheat.admin")) {
+                                AdminPanel::open($sender);
+                                return true;
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        return false;
+    }
 
     public static function getInstance(): AntiCheat
    {

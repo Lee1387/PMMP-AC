@@ -11,6 +11,7 @@ use pocketmine\block\Vine;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\network\mcpe\protocol\types\InputMode;
 use Lee1387\Checks\Check;
+use Lee1387\Checks\CheckManager;
 use Lee1387\Checks\Notifier;
 use Lee1387\Checks\Punishments;
 use Lee1387\User\User;
@@ -22,7 +23,7 @@ class GhostHand extends Check
 
     public function __construct()
     {
-        parent::__construct("GhostHand");
+        parent::__construct("GhostHand", CheckManager::WORLD);
     }
 
     public function onBlockBreak(BlockBreakEvent $event, User $user): void 
@@ -45,7 +46,7 @@ class GhostHand extends Check
         for ($i = 0; $i < $rewindTicks; $i++) {
             $rewindUser = $user->rewindMovementBuffer($i);
             $distance = $rewindUser->getPosition()->distance($block->getPosition());
-            $rayBlock = Raycast::getBlockOnLine($player, $rewindUser->getPosition(), $rewindUser->getDirection(), $distance);
+            $rayBlock = Raycast::getBlockOnLine($player, $rewindUser->getPosition(), $rewindUser->getDirection(), $distance + 0.3);
 
             if ($rayBlock != null){
                 if ($rayBlock === $block){

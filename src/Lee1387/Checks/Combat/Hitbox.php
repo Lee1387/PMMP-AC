@@ -8,6 +8,7 @@ use pocketmine\player\Player;
 use Lee1387\Checks\Check;
 use Lee1387\Checks\Notifier;
 use Lee1387\AntiCheat;
+use Lee1387\Checks\CheckManager;
 use Lee1387\User\User;
 use Lee1387\Utils\Constants;
 use Lee1387\Utils\Raycast;
@@ -18,7 +19,7 @@ class Hitbox extends Check
 
     public function __construct()
     {
-        parent::__construct("Hitbox");
+        parent::__construct("Hitbox", CheckManager::COMBAT);
     }
 
     public function onAttack(EntityDamageByEntityEvent $event, User $user): void
@@ -33,7 +34,7 @@ class Hitbox extends Check
                 return;
             }
 
-            $ray = Raycast::isBBOnline($victim->getPosition(), $player->getPosition(), $player->getDirectionVector(), $distance);
+            $ray = Raycast::isBBOnline($victim->getPosition(), $player->getPosition(), $player->getDirectionVector(), 6);
             if ($ray){
                 return;
             }
@@ -50,7 +51,7 @@ class Hitbox extends Check
 
             for ($i = 0; $i < $rewindTicks; $i++) {
                 $rewindVictim = $victimUser->rewindMovementBuffer($i);
-                $rewindVec = Raycast::isBBOnline($rewindVictim->getPosition(), $player->getPosition(), $player->getDirectionVector(), $distance);
+                $rewindVec = Raycast::isBBOnline($rewindVictim->getPosition(), $player->getPosition(), $player->getDirectionVector(), 6);
 
             if (!$rewindVec){
                 $user->decreaseViolation($this->getName());

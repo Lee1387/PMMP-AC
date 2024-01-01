@@ -8,6 +8,7 @@ use Lee1387\Checks\Check;
 use Lee1387\Checks\Notifier;
 use Lee1387\Checks\Punishments;
 use Lee1387\AntiCheat;
+use Lee1387\Checks\CheckManager;
 use Lee1387\User\User;
 
 class Timer extends Check
@@ -17,7 +18,7 @@ class Timer extends Check
 
     public function __construct()
     {
-        parent::__construct("Timer");
+        parent::__construct("Timer", CheckManager::MOVEMENT);
 
         $config = AntiCheat::getInstance()->getSavedConfig();
         $this->MAX_TICK_DIFFERENCE = $config->get("Timer-TickDifference") == null ? 10 : $config->get("Timer-TickDifference");
