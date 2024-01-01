@@ -83,7 +83,7 @@ class User
         }
     }
 
-    public function preMove(PlayerAuthInputPacket $packet, Player $player): void 
+    public function preMove(PlayerAuthInputPacket $packet, Player $player): void
     {
         $moveForward = Random::clamp(-1, 1, $packet->getMoveVecZ());
         $moveStrafe = Random::clamp(-1, 1, $packet->getMoveVecX());
@@ -130,7 +130,7 @@ class User
 
     }
 
-    public function postMove(PlayerAuthInputPacket $packet, Player $player): void 
+    public function postMove(PlayerAuthInputPacket $packet, Player $player): void
     {
         if ($packet->hasFlag(PlayerAuthInputFlags::START_JUMPING)){
             $this->ticksSinceJump = 0;
@@ -138,7 +138,7 @@ class User
         }
     }
 
-    public function handleCorrection(Vector3 $position): void 
+    public function handleCorrection(Vector3 $position): void
     {
         $this->ticksSinceCorrection = 0;
     }
@@ -160,8 +160,9 @@ class User
         $this->movementBuffer[$size] = $object;
     }
 
-    public function rewindMovementBuffer(int $ticks = 0): ?MovementFrame
+    public function rewindMovementBuffer(int $ticks = 0): MovementFrame
     {
+        $ticks = Random::clamp(0, PHP_INT_MAX, $ticks);
         $size = count($this->movementBuffer) - 1;
         return $this->movementBuffer[$size - $ticks] ?? $this->movementBuffer[$size - $ticks - 1];
     }
@@ -185,6 +186,7 @@ class User
 
     public function rewindAttackBuffer(int $ticks = 1): AttackFrame
     {
+        $ticks = Random::clamp(0, PHP_INT_MAX, $ticks);
         $size = count($this->attackBuffer) - 1;
         return $this->attackBuffer[$size - $ticks];
     }
@@ -209,7 +211,7 @@ class User
         $this->violations[$Check] = 0;
     }
 
-    public function getViolation(string $Check): float
+    public function getViolation(string $Check) : float
     {
         return $this->violations[$Check];
     }
@@ -294,57 +296,57 @@ class User
         $this->notifications = $notifications;
     }
 
-    public function getLastKnockbackTick(): int 
+    public function getLastKnockbackTick(): int
     {
         return $this->lastKnockbackTick;
     }
 
-    public function setLastKnockbackTick(int $lastKnockbackTick): void 
+    public function setLastKnockbackTick(int $lastKnockbackTick): void
     {
         $this->lastKnockbackTick = $lastKnockbackTick;
     }
 
-    public function hasMotion(): bool 
+    public function hasMotion() : bool
     {
         return $this->motion->length() != 0;
     }
 
-    public function getMotion(): Vector3 
+    public function getMotion(): Vector3
     {
         return $this->motion;
     }
 
-    public function setMotion(Vector3 $motion): void 
+    public function setMotion(Vector3 $motion): void
     {
         $this->motion = $motion;
     }
 
-    public function getMoveForward(): float 
+    public function getMoveForward(): float
     {
         return $this->moveForward;
     }
 
-    public function setMoveForward(float $moveForward): void 
+    public function setMoveForward(float $moveForward): void
     {
         $this->moveForward = $moveForward;
     }
 
-    public function getMoveStrafe(): float 
+    public function getMoveStrafe(): float
     {
         return $this->moveStrafe;
     }
 
-    public function setMoveStrafe(float $moveStrafe): void 
+    public function setMoveStrafe(float $moveStrafe): void
     {
         $this->moveStrafe = $moveStrafe;
     }
 
-    public function isPunishNext(): bool 
+    public function isPunishNext(): bool
     {
         return $this->punishNext;
     }
 
-    public function setPunishNext(bool $punishNext): void 
+    public function setPunishNext(bool $punishNext): void
     {
         $this->punishNext = $punishNext;
     }
@@ -354,22 +356,22 @@ class User
         return $this->moveDelta;
     }
 
-    public function setMoveDelta(Vector3 $moveDelta): void 
+    public function setMoveDelta(Vector3 $moveDelta): void
     {
         $this->moveDelta = $moveDelta;
     }
 
-    public function getLastDistanceXZ(): float 
+    public function getLastDistanceXZ(): float
     {
         return $this->lastDistanceXZ;
     }
 
-    public function setLastDistanceXZ(float $lastDistanceXZ): void 
+    public function setLastDistanceXZ(float $lastDistanceXZ): void
     {
         $this->lastDistanceXZ = $lastDistanceXZ;
     }
 
-    public function getTicksSinceJump(): int 
+    public function getTicksSinceJump(): int
     {
         return $this->ticksSinceJump;
     }
@@ -379,112 +381,112 @@ class User
         return $this->ticksSinceLanding;
     }
 
-    public function getTicksSinceIce(): int 
+    public function getTicksSinceIce(): int
     {
         return $this->ticksSinceIce;
     }
 
-    public function getYMotion(): float 
+    public function getYMotion(): float
     {
         return $this->yMotion;
     }
 
-    public function setYMotion(float $yMotion): void 
+    public function setYMotion(float $yMotion): void
     {
         $this->yMotion = $yMotion;
     }
 
-    public function addYMotion(float $yMotion): void 
+    public function addYMotion(float $yMotion): void
     {
         $this->yMotion += $yMotion;
     }
 
-    public function getServerPosition(): Vector3 
+    public function getServerPosition(): Vector3
     {
         return $this->serverPosition;
     }
 
-    public function setServerPosition(Vector3 $serverPosition): void 
+    public function setServerPosition(Vector3 $serverPosition): void
     {
         $this->serverPosition = $serverPosition;
     }
 
-    public function getPlayer(): Player 
+    public function getPlayer(): Player
     {
         return $this->player;
     }
 
-    public function setPlayer(Player $player): void 
+    public function setPlayer(Player $player): void
     {
         $this->player = $player;
     }
 
-    public function getServerMotion(): Vector3 
+    public function getServerMotion(): Vector3
     {
         return $this->serverMotion;
     }
 
-    public function setServerMotion(Vector3 $serverMotion): void 
+    public function setServerMotion(Vector3 $serverMotion): void
     {
         $this->serverMotion = $serverMotion;
     }
 
-    public function getTicksInAir() : int 
+    public function getTicksInAir(): int
     {
         return $this->ticksInAir;
     }
 
-    public function getTicksSinceJoin(): int 
+    public function getTicksSinceJoin(): int
     {
         return $this->ticksSinceJoin;
     }
 
-    public function getLastJumpingHeight(): float 
+    public function getLastJumpingHeight(): float
     {
         return $this->lastJumpingHeight;
     }
 
-    public function setLastJumpingHeight(float $lastJumpingHeight): void 
+    public function setLastJumpingHeight(float $lastJumpingHeight): void
     {
         $this->lastJumpingHeight = $lastJumpingHeight;
     }
 
-    public function getLastGround(): float 
+    public function getLastGround(): float
     {
         return $this->lastGround;
     }
 
-    public function setLastGround(float $lastGround): void 
+    public function setLastGround(float $lastGround): void
     {
         $this->lastGround = $lastGround;
     }
 
-    public function getTicksSinceMotion(): int 
+    public function getTicksSinceMotion(): int
     {
         return $this->ticksSinceMotion;
     }
 
-    public function resetTicksSinceMotion(): void 
+    public function resetTicksSinceMotion(): void
     {
         $this->ticksSinceMotion = 0;
     }
 
-    public function getTicksSinceCorrection(): int 
+    public function getTicksSinceCorrection(): int
     {
         return $this->ticksSinceCorrection;
     }
 
-    public function getTicksSinceStep(): int 
+    public function getTicksSinceStep(): int
     {
         return $this->ticksSinceStep;
     }
 
-    public function isWaitForGround(): bool 
+    public function isWaitForGround(): bool
     {
         return $this->WaitForGround;
     }
 
-    public function setWaitForGround(bool $WaitForGround): void 
+    public function setWaitForGround(bool $WaitForGround): void
     {
         $this->WaitForGround = $WaitForGround;
     }
