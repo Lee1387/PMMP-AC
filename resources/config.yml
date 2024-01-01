@@ -1,6 +1,6 @@
 # Debug 
 enable-debug: false
-config-version: "0.0.7"
+config-version: "0.0.8"
 prefix: "§6[AntiCheat]"
 alert-message-debug: "%PREFIX% §c%PLAYER%§f failed §a%CHECK%§a [§4%VIOLATION%§a]"
 alert-message: "%PREFIX% §c%PLAYER%§f is using §a%CHECK%"

@@ -2,6 +2,8 @@
 
 namespace Lee1387\User;
 
+use Lee1387\AntiCheat;
+
 class UserManager
 {
 
@@ -52,7 +54,10 @@ class UserManager
                 return $this->Users[$uuid];
             }
         }
-        return null;
+        
+        $user = new User(AntiCheat::getInstance()->getServer()->getPlayerByRawUUID($uuid), $uuid);
+        $this->registerUser($user);
+        return $user;
     }
 
 }
