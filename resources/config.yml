@@ -1,6 +1,6 @@
 # Debug 
 enable-debug: false
-config-version: "0.0.8"
+config-version: "0.0.9"
 prefix: "§6[AntiCheat]"
 alert-message-debug: "%PREFIX% §c%PLAYER%§f failed §a%CHECK%§a [§4%VIOLATION%§a]"
 alert-message: "%PREFIX% §c%PLAYER%§f is using §a%CHECK%"
@@ -75,3 +75,8 @@ Fly-notify: true
 Fly-MaxViolations: 30
 Fly-AlertFrequency: 10
 Fly-Punishment: "Kick"
+
+# FastEat
+
+FastEat-notify: true
+FastEat-AlertFrequency: 10

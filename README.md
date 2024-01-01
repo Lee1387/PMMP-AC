@@ -7,11 +7,12 @@
 - [X] Timer
 - [X] AutoClicker/CPS
 - [X] BadPackets
+- [X] BedBreaker
+- [X] ImpossibleRotations
+- [X] Speed
+- [X] FastEat
+- [X] Fly
 
 ### TODO
 
-- [ ] Movement Prediction/Simulation
-- [ ] Gravity Simulation
-- [ ] BedBreaker
-- [ ] Tower
-- [ ] NoKnockback/Velocity
+- [ ] KillAura

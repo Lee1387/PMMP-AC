@@ -11,6 +11,7 @@ use Lee1387\Checks\Movement\Speed;
 use Lee1387\Checks\Movement\Timer;
 use Lee1387\Checks\Packets\BadPacketsA;
 use Lee1387\Checks\Packets\BadPacketsB;
+use Lee1387\Checks\World\FastEat;
 use Lee1387\Checks\World\GhostHand;
 
 class CheckManager
@@ -31,6 +32,7 @@ class CheckManager
         $this->Checks[] = new BadPacketsB();
         $this->Checks[] = new GhostHand();
         $this->Checks[] = new ImpossibleRotations();
+        $this->Checks[] = new FastEat();
         $this->Checks[] = new Speed();
         $this->Checks[] = new Fly();
     }
