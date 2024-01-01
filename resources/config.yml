@@ -1,6 +1,6 @@
 # Debug 
 enable-debug: false
-config-version: "0.0.5"
+config-version: "0.0.6"
 prefix: "§6[AntiCheat]"
 alert-message-debug: "%PREFIX% §c%PLAYER%§f failed §a%CHECK%§a [§4%VIOLATION%§a]"
 alert-message: "%PREFIX% §c%PLAYER%§f is using §a%CHECK%"
@@ -54,3 +54,10 @@ GhostHand-notify: true
 GhostHand-MaxViolations: 5
 GhostHand-AlertFrequency: 10
 GhostHand-Punishment: "Cancel"
+
+# Speed
+
+Speed-notify: true
+Speed-MaxViolations: 20
+Speed-AlertFrequency: 10
+Speed-Punishment: "Kick"
