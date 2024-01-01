@@ -6,9 +6,11 @@ use Lee1387\Checks\Combat\AutoClicker;
 use Lee1387\Checks\Combat\Hitbox;
 use Lee1387\Checks\Combat\ImpossibleRotations;
 use Lee1387\Checks\Combat\Reach;
+use Lee1387\Checks\Movement\Fly;
 use Lee1387\Checks\Movement\Speed;
 use Lee1387\Checks\Movement\Timer;
 use Lee1387\Checks\Packets\BadPacketsA;
+use Lee1387\Checks\Packets\BadPacketsB;
 use Lee1387\Checks\World\GhostHand;
 
 class CheckManager
@@ -26,9 +28,11 @@ class CheckManager
         $this->Checks[] = new Timer();
         $this->Checks[] = new AutoClicker();
         $this->Checks[] = new BadPacketsA();
+        $this->Checks[] = new BadPacketsB();
         $this->Checks[] = new GhostHand();
         $this->Checks[] = new ImpossibleRotations();
         $this->Checks[] = new Speed();
+        $this->Checks[] = new Fly();
     }
 
     /**

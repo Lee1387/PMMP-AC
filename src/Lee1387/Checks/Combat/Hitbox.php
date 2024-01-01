@@ -9,6 +9,7 @@ use Lee1387\Checks\Check;
 use Lee1387\Checks\Notifier;
 use Lee1387\AntiCheat;
 use Lee1387\User\User;
+use Lee1387\Utils\Constants;
 use Lee1387\Utils\Raycast;
 use pocketmine\event\entity\EntityDamageEvent;
 
@@ -22,16 +23,17 @@ class Hitbox extends Check
 
     public function onAttack(EntityDamageByEntityEvent $event, User $user): void
     {
-        $player = $event->getDamager();
+        $player = $user->getPlayer();
         $victim = $event->getEntity();
+        $distance = $player->getPosition()->distance($victim->getPosition());
 
-        if ($player instanceof Player && $victim instanceof Player){
+        if ($victim instanceof Player){
 
             if ($user->getInput() == 0 || $user->getInput() == InputMode::TOUCHSCREEN || $event->getCause() !== EntityDamageEvent::CAUSE_ENTITY_ATTACK){
                 return;
             }
 
-            $ray = Raycast::isBBOnline($victim->getBoundingBox(), $player->getPosition(), $player->getDirectionVector(), $player->getPosition()->distance($victim->getPosition()));
+            $ray = Raycast::isBBOnline($victim->getPosition(), $player->getPosition(), $player->getDirectionVector(), $distance);
             if ($ray){
                 return;
             }
@@ -40,26 +42,30 @@ class Hitbox extends Check
             $victimUser = AntiCheat::getInstance()->getUserManager()->getUser($victimUUID);
 
             $ping = $player->getNetworkSession()->getPing();
-            $rewindTicks = ceil($ping / 50) + 1;
+            $rewindTicks = ceil($ping / 50) + 3;
 
-            if (count($victimUser->getMovementBuffer()) <= $rewindTicks || count($user->getMovementBuffer()) <= $rewindTicks){
+            if ($user->getTicksSinceJoin() < 40 || count($user->getMovementBuffer()) <= $rewindTicks){
                 return;
             }
 
-            $rewindBuffer = $victimUser->rewindMovementBuffer($rewindTicks);
-            $rewindRay = Raycast::isBBOnline($rewindBuffer->getBoundingBox(), $player->getPosition(), $player->getDirectionVector(), $player->getPosition()->distance($victim->getPosition()));
+            for ($i = 0; $i < $rewindTicks; $i++) {
+                $rewindVictim = $victimUser->rewindMovementBuffer($i);
+                $rewindVec = Raycast::isBBOnline($rewindVictim->getPosition(), $player->getPosition(), $player->getDirectionVector(), $distance);
 
-            if (!$rewindRay){
-                if ($user->getViolation($this->getName()) < $this->getMaxViolations()){
-                    $user->increaseViolation($this->getName(), 2);
+            if (!$rewindVec){
+                $user->decreaseViolation($this->getName());
+                    return;
                 }
-            }else{
-                $user->decreaseViolation($this->getName(), 1);
             }
+
+            if ($user->getViolation($this->getName()) < $this->getMaxViolations()) {
+                $user->increaseViolation($this->getName(), 2);
+            }
+
+            $event->cancel();
 
             if ($user->getViolation($this->getName()) >= $this->getMaxViolations()){
                 Notifier::NotifyFlag($player->getName(), $user, $this, $user->getViolation($this->getName()), $this->hasNotify());
-                $event->cancel();
             }
         }
     }

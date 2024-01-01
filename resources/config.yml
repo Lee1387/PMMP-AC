@@ -1,6 +1,6 @@
 # Debug 
 enable-debug: false
-config-version: "0.0.6"
+config-version: "0.0.7"
 prefix: "§6[AntiCheat]"
 alert-message-debug: "%PREFIX% §c%PLAYER%§f failed §a%CHECK%§a [§4%VIOLATION%§a]"
 alert-message: "%PREFIX% §c%PLAYER%§f is using §a%CHECK%"
@@ -23,10 +23,10 @@ Hitbox-AlertFrequency: 8
 # Timer 
 
 Timer-notify: true
-Timer-MaxViolations: 3
+Timer-MaxViolations: 1
 Timer-AlertFrequency: 5
-Timer-Punishment: "Kick"
-Timer-TickDifference: 15
+Timer-Punishment: "Cancel"
+Timer-TickDifference: 3
 
 # AutoClicker
 
@@ -40,7 +40,14 @@ CPS-Limit: 15
 BadPacketsA-notify: true
 BadPacketsA-MaxViolations: 5
 BadPacketsA-AlertFrequency: 10
-BadPacketsA-Punishment: "Kick"
+BadPacketsA-Punishment: "Cancel"
+
+# BadPacketsB
+
+BadPacketsB-notify: true
+BadPacketsB-MaxViolations: 5
+BadPacketsB-AlertFrequency: 10
+BadPacketsB-Punishment: "Cancel"
 
 # ImpossibleRotations
 
@@ -59,5 +66,12 @@ GhostHand-Punishment: "Cancel"
 
 Speed-notify: true
 Speed-MaxViolations: 20
-Speed-AlertFrequency: 10
-Speed-Punishment: "Kick"
+Speed-AlertFrequency: 8
+Speed-Punishment: "Cancel"
+
+# Fly
+
+Fly-notify: true
+Fly-MaxViolations: 30
+Fly-AlertFrequency: 10
+Fly-Punishment: "Kick"
