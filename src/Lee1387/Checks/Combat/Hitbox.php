@@ -34,7 +34,7 @@ class Hitbox extends Check
                 return;
             }
 
-            $ray = Raycast::isBBOnline($victim->getPosition(), $player->getPosition(), $player->getDirectionVector(), 6);
+            $ray = Raycast::isBBOnline($victim->getPosition(), $player->getPosition()->add(0, 1.62, 0), $player->getDirectionVector(), 6);
             if ($ray){
                 return;
             }
@@ -51,7 +51,9 @@ class Hitbox extends Check
 
             for ($i = 0; $i < $rewindTicks; $i++) {
                 $rewindVictim = $victimUser->rewindMovementBuffer($i);
-                $rewindVec = Raycast::isBBOnline($rewindVictim->getPosition(), $player->getPosition(), $player->getDirectionVector(), 6);
+                $rewindVec = Raycast::isBBOnline($rewindVictim->getPosition(), $player->getPosition()->add(0, 1.62, 0), $player->getDirectionVector(), 6);
+
+                $player->sendMessage($player->getPosition()->getY() + 1.62);
 
             if (!$rewindVec){
                 $user->decreaseViolation($this->getName());

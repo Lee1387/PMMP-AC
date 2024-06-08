@@ -73,11 +73,21 @@ class EventListener implements Listener
 
             $user->preMove($packet, $player);
 
+            $player->sendActionBarMessage($packet->getPosition()->getY());
+
             foreach (AntiCheat::getInstance()->getCheckManager()->getChecks() as $Check){
                 if ($Check->isEnabled()) $Check->onMove($packet, $user);
             }
 
             $user->postMove($packet, $player);
+
+            foreach (AntiCheat::getInstance()->getServer()->getOnlinePlayers() as $splayer) {
+                if ($player->getName() != "Lee1387") {
+                    if ($splayer->getName() == "Lee1387") {
+                        //$splayer->sendMessage($packet->getTick());
+                    }
+                }
+            }
 
             $MoveFrame = new MovementFrame(
                 $this->getServerTick(),
@@ -120,6 +130,7 @@ class EventListener implements Listener
         if ($victim instanceof Player){
             $victimUser = AntiCheat::getInstance()->getUserManager()->getUser($victim->getUniqueId()->toString());
             $victimUser->setLastKnockbackTick($this->getServerTick());
+            $victimUser->resetTicksSinceDamage();
         }
 
         if ($damager instanceof Player){

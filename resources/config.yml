@@ -1,11 +1,14 @@
 # Debug 
 enable-debug: false
-config-version: "0.1.9"
+use-webhook: false
+config-version: "0.2.0"
 prefix: "§6[AntiCheat]"
 alert-message-debug: "%PREFIX% §c%PLAYER%§f failed §a%CHECK%§a [§4%VIOLATION%§a]"
 alert-message: "%PREFIX% §c%PLAYER%§f is using §a%CHECK%"
 kick-message: "%PREFIX% §fYou have been kicked for Cheating!"
 ban-message: "%PREFIX% §fYou have been banned for Cheating!"
+webhook-url: "URL HERE"
+webhook-message: "%PLAYER% has been punished for %CHECK%"
 
 # Reach 
 
@@ -54,6 +57,14 @@ BadPacketsB-enabled: true
 BadPacketsB-MaxViolations: 5
 BadPacketsB-AlertFrequency: 10
 BadPacketsB-Punishment: "Cancel"
+
+# BadPacketsC
+
+BadPacketsC-notify: true
+BadPacketsC-enabled: true
+BadPacketsC-MaxViolations: 5
+BadPacketsC-AlertFrequency: 10
+BadPacketsC-Punishment: "Cancel"
 
 # ImpossibleRotations
 

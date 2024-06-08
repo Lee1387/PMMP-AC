@@ -7,6 +7,7 @@ use pocketmine\permission\BanEntry;
 use pocketmine\player\Player;
 use Lee1387\AntiCheat;
 use Lee1387\User\User;
+use Lee1387\Utils\DiscordWebhook;
 
 class Punishments
 {
@@ -40,6 +41,7 @@ class Punishments
                     self::SentTitleMessage($player, $check, " (Kick)");
                 }else{
                     self::KickUser($player, $check);
+                    DiscordWebhook::PostNotification($player, $check);
                 }
                 break;
             case "Ban":
